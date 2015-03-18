@@ -22,7 +22,6 @@ bundler.on('log', function(message) {
   console.log('Change detected. Re-bundle completed: ' + message);
 });
 
-//Package all browserify code into JavaScript bundle
 function bundle() {
   return bundler
     .bundle()
@@ -34,7 +33,6 @@ function bundle() {
     .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
     .on('error', restart)
     .pipe(sourcemaps.write('./')) // writes .map file
-    .on('error', restart)
     .on('error', restart)
     .pipe(gulp.dest('player/dist'));
 }

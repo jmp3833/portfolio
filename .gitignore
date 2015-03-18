@@ -1,5 +1,8 @@
 node_modules/*
-player/dist/*
+player/dist/app.css
+player/dist/app.css.map
+player/dist/bundle.js
+player/dist/bundle.js.map
 nohup.out
 npm-debug.log
 server.log
