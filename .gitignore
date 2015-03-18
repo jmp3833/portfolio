@@ -1,4 +1,4 @@
 node_modules/*
-dist/*
+player/dist/*
 nohup.out
 npm-debug.log
