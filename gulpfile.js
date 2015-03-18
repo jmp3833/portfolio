@@ -11,7 +11,6 @@ var connect = require('gulp-connect');
 var exec = require('child_process').exec;
 var babelify = require('babelify');
 var less = require('gulp-less');
-var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var bundler = watchify(browserify('./player/src/js/app.js', watchify.args));
 
@@ -32,7 +31,6 @@ function bundle() {
     .on('error', restart)
     .pipe(buffer())
     .on('error', restart)
-    .pipe(uglify())
     .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
     .on('error', restart)
     .pipe(sourcemaps.write('./')) // writes .map file
@@ -55,15 +53,9 @@ function lessToCss() {
     .pipe(gulp.dest('player/dist'));
 }
 
-//deploy simple webserver
+//deploy npm webserver
 function server(){
-  connect.server({
-    port: 9500,
-    livereload: {
-      livereload: true,
-      port: 35730
-    }
-  });
+  var server = require('./bin/www');
 }
 
 function restart(error) {

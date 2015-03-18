@@ -7,6 +7,7 @@
 var React = require('react');
 var App = require('./components/App.react');
 var PageNotFound = require('./components/404.react');
+var Index = require('./components/Index.react')
 
 var Router = require('react-router');
 var {Route, NotFoundRoute, DefaultRoute} = Router;
@@ -20,7 +21,7 @@ var routes = (
 
 Router.run(routes, function(Handler) {
   React.render(
-    <Handler flux={flux}/>,
+    <Handler/>,
     document.getElementById('react')
   )
 });
