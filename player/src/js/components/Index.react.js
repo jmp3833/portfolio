@@ -6,10 +6,10 @@ var NotFound = React.createClass({
   render: function() {
     return (
       <section className="index-section">
-        <div className="col-md-3">
+        <div className="col-sm-3">
           <Sidebar/>
         </div>
-        <div className="col-md-9 content-separator">
+        <div className="col-sm-9 content-separator">
           Main content area
         </div>
       </section>
