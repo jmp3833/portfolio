@@ -34,9 +34,9 @@ var NavBar = (
           </div>
           <div id="navbar" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li className="active" id="home" data-toggle="active" data-target="#home"><a href="#">Home</a></li>
-              <li className="active" id="about" data-toggle="active" data-target="#about"><a href="#about">About</a></li>
-              <li className="active" id="contact" data-toggle="active" data-target="#contact"><a href="#contact">Contact</a></li>
+              <li id="home"><a href="#">Home</a></li>
+              <li id="about"><a href="#/about">About</a></li>
+              <li id="contact"><a href="#/contact">Contact</a></li>
             </ul>
           </div>
         </div>
