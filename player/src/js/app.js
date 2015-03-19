@@ -40,6 +40,7 @@ var NavBar = (
             </ul>
           </div>
         </div>
+        <hr className="navbar-underline"></hr>
       </nav>
     </section>
 );
@@ -49,8 +50,11 @@ Router.run(routes, function(Handler) {
     <div>    
       {NavBar}
       <div className="spacer"></div>
-      <hr className="navbar-underline"></hr>
       <Handler/>
+      <div id="footer">
+        <hr className="navbar-underline"></hr>
+        <p className='footer-copyright-text'>&copy; Justin Peterson, 2015.</p>
+      </div>
     </div>,
     document.getElementById('react')
   )
