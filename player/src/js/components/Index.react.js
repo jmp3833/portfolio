@@ -6,13 +6,11 @@ var NotFound = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <div className="col-fixed-300">
+        <div className="col-sm-4 sidebar">
           <Sidebar/>
         </div>
-        <div className="col-md-12 col-offset-300 hidden-xs">
-          <div className="row content-separator">
-            Standard grid system content here
-          </div>
+        <div className="col-sm-8 main-content-section">
+          <div className="">Main Content Section</div>
         </div>
       </div>
     );

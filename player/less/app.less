@@ -24,14 +24,6 @@ h6, .h6 {
   color: #9d9d9d;
 }
 
-/*
-* Space between nav bar and main content section.
-*/
-.spacer {
-  width: 100%;
-  height: 55px;
-}
-
 .navbar-inverse {
   background-color: #FFFFFF;
   border-color: #FFFFFF;
@@ -63,43 +55,10 @@ h6, .h6 {
   margin-left: 15px;
 }
 
-@height-delimiter: 100vh;
-.content-separator {
-  border-left: thin solid #eee;
-  height: @height-delimiter;
-}
-
-.index-section {
-  margin-top: 0px;
-  height: @height-delimiter;
-}
-
 .footer-copyright-text {
   text-align: right;
   margin-right: 15px;
   margin-top: 5px;
-}
-
-.sidebar-profile {
-  width: 200px;
-  height: 200px;
-  margin-left: 25px;
-  margin-bottom: 20px;
-
-}
-
-.col-offset-300 {
-  padding-left:325px;
-}
-
-/*
-* Define fixed left column and variable length
-* content window.
-*/
-.col-fixed-300 {
-  width:300px;
-  position:fixed;
-  height:100%;
 }
 
 .about-text>h3,
@@ -107,8 +66,40 @@ h6, .h6 {
   margin-left: 30px;
 }
 
-.sidebar-content-separator {
-  width: 310px;
+.about>img {
+  width: 150px;
+  height: 150px;
+}
+
+@media (min-width: 768px){
+  .sidebar {
+    position: fixed;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    overflow-y: scroll; 
+  }
+  
+  .main-content-section {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    overflow-y: scroll;
+    width: 75%;
+    border-left: 1px solid #eee
+  }
+}
+
+.sidebar {
+  height:100%;
+  margin-top: 65px;
+}
+
+.main-content-section {
+  height:100%;
+  padding-top: 65px;
 }
 
 #footer {
