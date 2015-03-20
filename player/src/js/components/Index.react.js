@@ -5,14 +5,16 @@ var Sidebar = require('./Sidebar.react');
 var NotFound = React.createClass({
   render: function() {
     return (
-      <section className="index-section">
-        <div className="col-sm-3">
+      <div className="row">
+        <div className="col-fixed-300">
           <Sidebar/>
         </div>
-        <div className="col-sm-9 content-separator">
-          Main content area
+        <div className="col-md-12 col-offset-300 hidden-xs">
+          <div className="row content-separator">
+            Standard grid system content here
+          </div>
         </div>
-      </section>
+      </div>
     );
   }
 });

@@ -6,10 +6,12 @@ var Strings = require('../strings')
 module.exports = React.createClass({
   render: function() {
     return (
-      <div className="sidebar-container">
+      <div className="about-text">
         <img src="./public/images/profile.jpg" className="sidebar-profile"/>
         <h3>About</h3>
-        {Strings.about}
+        <p>{Strings.about}</p>
+        <p>{Strings.aboutFooter}</p>
+        <hr className="sidebar-content-separator"></hr>
       </div>
     );
   },

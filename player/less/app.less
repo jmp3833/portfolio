@@ -1,5 +1,9 @@
 @import "./bootstrap/bootstrap.less";
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 /*
  * Fonts setup
  */
@@ -76,18 +80,35 @@ h6, .h6 {
   margin-top: 5px;
 }
 
-.sidebar-container {
-  position: fixed;
-  width: 25vh;
-  margin-top: 25px;
-}
-
 .sidebar-profile {
   width: 200px;
   height: 200px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 25px;
+  margin-bottom: 20px;
+
+}
+
+.col-offset-300 {
+  padding-left:325px;
+}
+
+/*
+* Define fixed left column and variable length
+* content window.
+*/
+.col-fixed-300 {
+  width:300px;
+  position:fixed;
+  height:100%;
+}
+
+.about-text>h3,
+.about-text>p {
+  margin-left: 30px;
+}
+
+.sidebar-content-separator {
+  width: 310px;
 }
 
 #footer {
@@ -98,4 +119,5 @@ h6, .h6 {
    width:100%;
    background:#FFFFFF;
 }
+
 
