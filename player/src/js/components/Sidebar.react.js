@@ -20,7 +20,16 @@ module.exports = React.createClass({
             <hr className="sidebar-content-separator"></hr>
           </div>
         </div>
+        <div className="sidebar-blog-tags">
+          <h3>Tags</h3>
+          <ul>
+            <li><a className="social" href="/#/blog/newest">Newest</a></li>
+            <li><a className="social" href="/#/blog/all">All</a></li>
+            <li><a className="social" href="/#/blog/2015">2015</a></li>
+          </ul>
+        </div>
       </div>
+
     );
   },
 });

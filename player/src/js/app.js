@@ -7,7 +7,8 @@
 var React = require('react');
 var App = require('./components/App.react');
 var PageNotFound = require('./components/404.react');
-var Index = require('./components/Index.react')
+var Index = require('./components/Index.react');
+var Sidebar = require('./components/Sidebar.react');
 
 var Router = require('react-router');
 var {Route, NotFoundRoute, DefaultRoute} = Router;
@@ -50,7 +51,14 @@ Router.run(routes, function(Handler) {
     <div>    
       {NavBar}
       <div className="spacer"></div>
-      <Handler/>
+      <div className="row">
+        <div className="col-sm-4 sidebar">
+          <Sidebar/>
+        </div>
+        <div className="col-sm-8 main-content-section">
+          <Handler/>
+        </div>
+      </div>
       <div id="footer">
         <hr className="navbar-underline"></hr>
         <p className='footer-copyright-text'>&copy; Justin Peterson, 2015.</p>
