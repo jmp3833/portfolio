@@ -7,21 +7,20 @@ function getHTMLFromMarkdown(filename, callback) {
   });
 
   var post_options = {
-      host: 'http://justinpeterson.me',
+      host: 'localhost',
       port: '80',
       path: '/api/getMarkup',
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': post_data.length
       }
   };
 
   // Set up the request
   var post_req = http.request(post_options, function(res) {
-      res.setEncoding('utf8');
       res.on('data', function (chunk) {
-          callback(chunk);
+          callback({"markup": chunk});
       });
   });
 

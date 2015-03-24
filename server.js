@@ -5,8 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
+var cors = require('cors');
 
 var app = express();
+//Enable CORS (Allow origin requests)
+app.use(cors());
 
 // view engine setup (basic HTML for now)
 app.set('views', path.join(__dirname,'/player'));
@@ -53,6 +56,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

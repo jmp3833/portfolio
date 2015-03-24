@@ -10,8 +10,8 @@ module.exports = Fluxxor.createStore({
     );
   },
 
-  onFetchMarkup: function(markup) {
-    this.pageContent = markup;
+  onFetchMarkup: function(response) {
+    this.pageContent = response.markup;
     this.emit(constants.CHANGE_EVENT);
   },
 

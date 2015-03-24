@@ -10,14 +10,14 @@ var NotFound = React.createClass({
   render: function() {
     return (
       <div className="">
-        <br/><br/><br/>
-        <h1 className="index-title">Welcome!</h1>
+        {this.state.pageContent}
       </div>
     );
   },
 
   getStateFromFlux: function() {
     var flux = this.getFlux();
+    console.log(flux.store("PortfolioStore").getState());
     return flux.store("PortfolioStore").getState();
   },
 

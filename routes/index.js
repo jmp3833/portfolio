@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 
 //Backend data service routes
 router.post('/api/getMarkup', function(req, res) {
+  console.log("Made it!");
   var filename = req.body.filename;
   MarkdownService.convertMarkdownToHTML(filename, function(responseHTML) {
     res.setHeader('Content-Type', 'text/html');

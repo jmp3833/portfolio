@@ -1,12 +1,12 @@
 'use strict';
 
 var Fluxxor = require('fluxxor');
-var PortfolioStore = require('./stores/IndexStore'); 
+var PortfolioStore = require('./stores/PortfolioStore'); 
 var portfolioActions = require('./actions/PortfolioActionCreators');
 
 //Initalize all stores
 var stores = {
-  PortfolioStore : new PortfolioStore()
+  PortfolioStore : new PortfolioStore()q
 
 };
 
