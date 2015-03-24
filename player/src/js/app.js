@@ -10,6 +10,8 @@ var PageNotFound = require('./components/404.react');
 var Index = require('./components/Index.react');
 var Sidebar = require('./components/Sidebar.react');
 
+var flux = require('./FluxInstance');
+
 var Router = require('react-router');
 var {Route, NotFoundRoute, DefaultRoute} = Router;
 
@@ -53,10 +55,10 @@ Router.run(routes, function(Handler) {
       <div className="spacer"></div>
       <div className="row">
         <div className="col-sm-4 sidebar">
-          <Sidebar/>
+          <Sidebar flux={flux}/>
         </div>
         <div className="col-sm-8 main-content-section">
-          <Handler/>
+          <Handler flux={flux}/>
         </div>
       </div>
       <div id="footer">
