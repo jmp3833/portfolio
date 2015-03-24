@@ -4,7 +4,10 @@ var React = require('react');
 var NotFound = React.createClass({
   render: function() {
     return (
-      <div className="">Main Content Section</div>
+      <div className="">
+        <br/><br/><br/>
+        <h1 className="index-title">Welcome!</h1>
+      </div>
     );
   }
 });
