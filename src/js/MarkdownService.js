@@ -2,18 +2,9 @@
 var Showdown = require('showdown');
 var fs = require('fs');
 var path = require('path');
+var DBInstance = require('./DBInstance');
 
 var converter = new Showdown.converter();
-
-function convertMarkdownToHTML(filename, cb) {
-  var fileLocation = './posts/' + filename + '.md';
-  fs.readFile(fileLocation, 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-    cb(converter.makeHtml(data.toString()));
-  });
-}
 
 /*
 * Get the [amount] most recent blog posts.
@@ -23,6 +14,62 @@ function getNewestPosts(amount, callback) {
   _walk('./posts', function(err, data) {
     if(err) {throw(err);} 
     callback(data);
+  });
+}
+
+/*
+* Go through all files in the posts directory and make sure
+* all post content is in sync with the database.
+*/
+var syncDB = function() {
+  DBInstance.connectToDB(function(err, db) {
+    if(err){throw err}
+    var collection = db.collection('posts');
+    _walk('./posts', function(err, data) {
+      if(err){throw err}
+      var results = data.length;
+      data.forEach(function(filePath) {
+        _convertMarkdownToHTML(filePath, function(data){
+          _getpostMetadata(filePath, function(metadata){
+            var fileName = path.basename(filePath);
+            collection.find({_id: fileName}).toArray(function(err,queryData) {
+              var document = queryData[0];
+              //If document doesnt exist in DB, insert it.
+              if(!document) {
+                collection.insert({
+                  _id: fileName,
+                  content: data,
+                  date: metadata.date,
+                  tags: metadata.tags
+                });
+              }
+              //Update post content if it's stale.
+              else if(data !== document.content){
+                collection.update({_id: fileName},
+                  {content: data,
+                  date: metadata.date,
+                  tags: metadata.tags}
+                );
+              }
+              //All files have been updated. Lets get outta here!
+              results--;
+              if(results == 0){
+                db.close();
+              }
+            });
+          });
+        });
+      });
+    });
+  });
+};
+
+function _convertMarkdownToHTML(filename, cb) {
+  fs.readFile(filename, 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }
+    cb(converter.makeHtml(data.toString()));
   });
 }
 
@@ -39,7 +86,7 @@ var _walk = function(dir, done) {
       file = path.resolve(dir, file);
       fs.stat(file, function(err, stat) {
         if (stat && stat.isDirectory()) {
-          walk(file, function(err, res) {
+          _walk(file, function(err, res) {
             results = results.concat(res);
             if (!--pending) done(null, results);
           });
@@ -74,6 +121,6 @@ var _getpostMetadata= function(filename, callback) {
 };
 
 module.exports = {
-  convertMarkdownToHTML: convertMarkdownToHTML,
-  getNewestPosts: getNewestPosts
+  getNewestPosts: getNewestPosts,
+  syncDB: syncDB
 }

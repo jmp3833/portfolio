@@ -19,5 +19,5 @@ module.exports = Fluxxor.createStore({
     return {
       pageContent: this.pageContent
     };
-  } 
+  }
 });
