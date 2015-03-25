@@ -18,6 +18,19 @@ function getNewestPosts(amount, callback) {
 }
 
 /*
+* Grab post by Id.
+*/
+function getPost(name, callback) {
+  DBInstance.connectToDB(function(err, db) {
+    if(err){throw err}
+    var filename = name + '.md';
+    db.collection('posts').find({_id: filename}).toArray(function(err,queryData) {
+      callback(err, queryData[0]);
+    });
+  });
+}
+
+/*
 * Go through all files in the posts directory and make sure
 * all post content is in sync with the database.
 */
@@ -122,5 +135,6 @@ var _getpostMetadata= function(filename, callback) {
 
 module.exports = {
   getNewestPosts: getNewestPosts,
-  syncDB: syncDB
+  syncDB: syncDB,
+  getPost: getPost
 }

@@ -5,7 +5,7 @@ var PortfolioServiceClient = require('../service/PortfolioService');
 var actions = {
   setPageMarkup: function(filename) {
     PortfolioServiceClient.getHTMLFromMarkdown(filename, function(payloadData) {
-      this.dispatch(constants.PAGE_MARKUP_FETCHED, payloadData);
+      this.dispatch(constants.PAGE_MARKUP_FETCHED, JSON.parse(payloadData));
     }.bind(this));
   }
 };

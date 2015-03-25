@@ -11,7 +11,7 @@ module.exports = Fluxxor.createStore({
   },
 
   onFetchMarkup: function(response) {
-    this.pageContent = response.markup;
+    this.pageContent = response.content;
     this.emit(constants.CHANGE_EVENT);
   },
 

@@ -9,7 +9,7 @@ function getHTMLFromMarkdown(filename, callback) {
   var post_options = {
       host: 'localhost',
       port: '80',
-      path: '/api/getMarkup',
+      path: '/api/getPost',
       method: 'POST',
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -20,7 +20,7 @@ function getHTMLFromMarkdown(filename, callback) {
   // Set up the request
   var post_req = http.request(post_options, function(res) {
       res.on('data', function (chunk) {
-          callback({"markup": chunk});
+          callback(chunk);
       });
   });
 
