@@ -9,9 +9,7 @@ var NotFound = React.createClass({
 
   render: function() {
     return (
-      <div className="">
-        {this.state.pageContent}
-      </div>
+      <span dangerouslySetInnerHTML={{__html: this.state.pageContent}} />
     );
   },
 
