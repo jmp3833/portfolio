@@ -56,6 +56,7 @@ var syncDB = function() {
               if(!document) {
                 collection.insert({
                   _id: fileName,
+                  title: metadata.title,
                   content: data,
                   date: new Date(metadata.date),
                   tags: metadata.tags
@@ -64,7 +65,8 @@ var syncDB = function() {
               //Update post content if it's stale.
               else if(data !== document.content){
                 collection.update({_id: fileName},
-                  {content: data,
+                  {title: metadata.title,
+                  content: data,
                   date: new Date(metadata.date),
                   tags: metadata.tags}
                 );
@@ -129,11 +131,13 @@ var _getpostMetadata= function(filename, callback) {
   .on('data', function (chunk) {
     var postDate = chunk.toString().split('\n')[0].slice(4,-3);
     var postTags = chunk.toString().split('\n')[1].slice(4,-3);
+    var postTitle = chunk.toString().split('\n')[2].slice(4,-3);
     var postTagsArray = postTags.split(', ');
     fileStream.destroy();
     callback({
       date: postDate,
-      tags: postTagsArray
+      tags: postTagsArray,
+      title: postTitle
     });
   })
   .on('error', function (err) {
