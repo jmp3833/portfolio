@@ -8,11 +8,18 @@ router.get('/', function(req, res, next) {
 
 //Backend data service routes
 router.post('/api/getMarkup', function(req, res) {
-  console.log("Made it!");
   var filename = req.body.filename;
   MarkdownService.convertMarkdownToHTML(filename, function(responseHTML) {
     res.setHeader('Content-Type', 'text/html');
     res.end(responseHTML);
+  });
+});
+
+router.post('/api/getNewest', function(req, res) {
+  var amount = req.body.amount;
+  MarkdownService.getNewestPosts(10, function(newestPosts) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(newestPosts.toString());
   });
 });
 
