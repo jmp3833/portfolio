@@ -15,7 +15,6 @@ var NotFound = React.createClass({
 
   getStateFromFlux: function() {
     var flux = this.getFlux();
-    console.log(flux.store("PortfolioStore").getState());
     return flux.store("PortfolioStore").getState();
   },
 

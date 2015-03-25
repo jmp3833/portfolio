@@ -2,18 +2,28 @@ var querystring = require('querystring');
 var http = require('http');
 
 function getHTMLFromMarkdown(filename, callback) {
-  var post_data = querystring.stringify({
-      'filename' : filename
+  var params = querystring.stringify({
+    filename: filename
   });
+  _POST(params, '/api/getPost', callback);
+}
 
+function getTopPosts(callback) {
+  var params = querystring.stringify({
+    amount: 10
+  });
+  _POST(params, '/api/getNewest', callback);
+}
+
+function _POST(postData, path, callback) {
   var post_options = {
       host: 'localhost',
       port: '80',
-      path: '/api/getPost',
+      path: path,
       method: 'POST',
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Content-Length': post_data.length
+          'Content-Length': postData.length
       }
   };
 
@@ -25,10 +35,11 @@ function getHTMLFromMarkdown(filename, callback) {
   });
 
   // post the data
-  post_req.write(post_data);
+  post_req.write(postData);
   post_req.end();
 }
 
 module.exports = {
-  getHTMLFromMarkdown: getHTMLFromMarkdown
+  getHTMLFromMarkdown: getHTMLFromMarkdown,
+  getTopPosts: getTopPosts
 }

@@ -1,9 +1,13 @@
 'use strict';
 /* @jsx React.DOM */
 var React = require('react');
-var Strings = require('../strings')
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+var Strings = require('../strings');
 
 module.exports = React.createClass({
+  mixins: [FluxMixin, StoreWatchMixin("PortfolioStore")],
   render: function() {
     return (
       <div className="about">
@@ -23,18 +27,33 @@ module.exports = React.createClass({
         <div className="sidebar-blog-tags">
           <h3>Tags</h3>
           <ul>
-            <li><a className="social" href="/#/blog/newest">Newest</a></li>
-            <li><a className="social" href="/#/blog/all">All</a></li>
-            <li><a className="social" href="/#/blog/2015">2015</a></li>
+            <li><a className="social" onClick={this.getNewest}>Newest</a></li>
+            <li><a className="social" onClick={this.getNewest}>All</a></li>
+            <li><a className="social" onClick={this.getNewest}>2015</a></li>
           </ul>
         </div>
         <hr className="sidebar-content-separator"></hr>
         <div className="sidebar-recent-posts">
           <ul>
-            <li><a className="social" href="/#/index">Hello, World!</a></li>
+            {
+              this.state.sidebarContent.map(function(item, index) {
+                return (
+                  <li><a className="social" href={"/#/" + item._id.slice(0,-3)}>{item.title}</a></li>
+                );
+              })
+            }
           </ul>
         </div>
       </div>
     );
   },
+
+  getNewest: function(e) {
+    this.getFlux().actions.getNewestPosts();
+  },
+
+  getStateFromFlux: function() {
+    var flux = this.getFlux();
+    return flux.store("PortfolioStore").getState();
+  }
 });

@@ -6,8 +6,10 @@ module.exports = Fluxxor.createStore({
   initialize: function() {
     this.pageContent = "";
     this.bindActions(
-      constants.PAGE_MARKUP_FETCHED, this.onFetchMarkup
+      constants.PAGE_MARKUP_FETCHED, this.onFetchMarkup,
+      constants.SIDEBAR_CONTENT_UPDATED, this.onSidebarContentUpdate
     );
+    this.sidebarContent = [];
   },
 
   onFetchMarkup: function(response) {
@@ -15,9 +17,15 @@ module.exports = Fluxxor.createStore({
     this.emit(constants.CHANGE_EVENT);
   },
 
+  onSidebarContentUpdate: function(posts) {
+    this.sidebarContent = posts;
+    this.emit(constants.CHANGE_EVENT);
+  },
+
   getState: function() {
     return {
-      pageContent: this.pageContent
+      pageContent: this.pageContent,
+      sidebarContent: this.sidebarContent
     };
   }
 });

@@ -7,6 +7,12 @@ var actions = {
     PortfolioServiceClient.getHTMLFromMarkdown(filename, function(payloadData) {
       this.dispatch(constants.PAGE_MARKUP_FETCHED, JSON.parse(payloadData));
     }.bind(this));
+  },
+
+  getNewestPosts: function() {
+    PortfolioServiceClient.getTopPosts(function(posts){
+      this.dispatch(constants.SIDEBAR_CONTENT_UPDATED, JSON.parse(posts));
+    }.bind(this));
   }
 };
 
