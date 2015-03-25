@@ -17,7 +17,8 @@ router.post('/api/getPost', function(req, res) {
 
 router.post('/api/getNewest', function(req, res) {
   var amount = req.body.amount;
-  MarkdownService.getNewestPosts(10, function(newestPosts) {
+  MarkdownService.getNewestPosts(amount, function(err, newestPosts) {
+    if(err){throw err}
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(newestPosts));
   });

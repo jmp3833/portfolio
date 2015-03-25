@@ -3,6 +3,7 @@ var Showdown = require('showdown');
 var fs = require('fs');
 var path = require('path');
 var DBInstance = require('./DBInstance');
+var _ = require('lodash');
 
 var converter = new Showdown.converter();
 
@@ -10,10 +11,14 @@ var converter = new Showdown.converter();
 * Get the [amount] most recent blog posts.
 */
 function getNewestPosts(amount, callback) {
-  //TODO: Tie in DB and make call
-  _walk('./posts', function(err, data) {
-    if(err) {throw(err);} 
-    callback(data);
+  DBInstance.connectToDB(function(err, db) {
+    db.collection('posts').find({}).toArray(function(err,queryData) {
+      var posts = _.sortBy(queryData, 'date');
+      if (posts.length > amount) {
+        posts = posts.slice(0,-(queryData.length - amount));
+      }
+      callback(err, posts);
+    });
   });
 }
 
@@ -52,7 +57,7 @@ var syncDB = function() {
                 collection.insert({
                   _id: fileName,
                   content: data,
-                  date: metadata.date,
+                  date: new Date(metadata.date),
                   tags: metadata.tags
                 });
               }
@@ -60,7 +65,7 @@ var syncDB = function() {
               else if(data !== document.content){
                 collection.update({_id: fileName},
                   {content: data,
-                  date: metadata.date,
+                  date: new Date(metadata.date),
                   tags: metadata.tags}
                 );
               }
@@ -77,6 +82,9 @@ var syncDB = function() {
   });
 };
 
+/*
+* Parse a markdown file and return its HTML string representation.
+*/
 function _convertMarkdownToHTML(filename, cb) {
   fs.readFile(filename, 'utf8', function (err,data) {
     if (err) {
