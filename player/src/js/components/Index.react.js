@@ -20,7 +20,7 @@ var NotFound = React.createClass({
   },
 
   componentWillMount: function() {
-    this.getFlux().actions.setPageMarkup('README.md');
+    this.getFlux().actions.setPageMarkup('Index');
   }
 });
 

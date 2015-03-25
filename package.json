@@ -18,7 +18,8 @@
     "pagedown": "^1.1.0",
     "react": "^0.12.2",
     "react-router": "^0.12.4",
-    "serve-favicon": "~2.2.0"
+    "serve-favicon": "~2.2.0",
+    "showdown": "^0.4.0"
   },
   "devDependencies": {
     "babelify": "^5.0.4",

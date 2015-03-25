@@ -1,11 +1,12 @@
 'use strict'
-var showdown = require('showdown');
+var Showdown = require('showdown');
 var fs = require('fs')
 
 var converter = new Showdown.converter();
 
 function convertMarkdownToHTML(filename, cb) {
-  fs.readFile(filename, 'utf8', function (err,data) {
+  var fileLocation = './posts/' + filename + '.md';
+  fs.readFile(fileLocation, 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
     }
