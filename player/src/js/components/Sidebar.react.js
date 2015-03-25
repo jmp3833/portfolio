@@ -28,8 +28,13 @@ module.exports = React.createClass({
             <li><a className="social" href="/#/blog/2015">2015</a></li>
           </ul>
         </div>
+        <hr className="sidebar-content-separator"></hr>
+        <div className="sidebar-recent-posts">
+          <ul>
+            <li><a className="social" href="/#/index">Hello, World!</a></li>
+          </ul>
+        </div>
       </div>
-
     );
   },
 });
