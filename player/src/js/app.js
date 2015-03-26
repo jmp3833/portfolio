@@ -7,7 +7,7 @@
 var React = require('react');
 var App = require('./components/App.react');
 var PageNotFound = require('./components/404.react');
-var Index = require('./components/Index.react');
+var Post = require('./components/Index.react');
 var Sidebar = require('./components/Sidebar.react');
 
 var flux = require('./FluxInstance');
@@ -17,7 +17,8 @@ var {Route, NotFoundRoute, DefaultRoute} = Router;
 
 var routes = (
   <Route handler={App}>
-    <DefaultRoute handler={Index}/>
+    <DefaultRoute handler={Post}/>
+    <Route name="post" path="/post/:postId" handler={Post} />
     <NotFoundRoute handler={PageNotFound}/>
   </Route>
 );

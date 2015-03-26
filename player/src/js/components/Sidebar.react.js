@@ -32,15 +32,16 @@ module.exports = React.createClass({
             <li><a className="social" onClick={this.getNewest}>2015</a></li>
           </ul>
         </div>
-        <hr className="sidebar-content-separator"></hr>
-        <div className="sidebar-recent-posts">
+        <div className="sidebar-blog-tags">
+          <hr className="sidebar-content-separator"></hr>
+          <h3>Posts</h3>
           <ul>
             {
               this.state.sidebarContent.map(function(item, index) {
                 return (
-                  <li><a className="social" href={"/#/" + item._id.slice(0,-3)}>{item.title}</a></li>
+                  <li><a className="social" onClick={this.fetchPage.bind(this, item)} key={item} href={"/#/post/" + item._id.slice(0,-3)}>{item.title}</a></li>
                 );
-              })
+              }.bind(this))
             }
           </ul>
         </div>
@@ -50,6 +51,12 @@ module.exports = React.createClass({
 
   getNewest: function(e) {
     this.getFlux().actions.getNewestPosts();
+  },
+
+  fetchPage: function(item) {
+    var postName = item._id.slice(0,-3);
+    console.log(postName);
+    this.getFlux().actions.setPageMarkup(postName);
   },
 
   getStateFromFlux: function() {
