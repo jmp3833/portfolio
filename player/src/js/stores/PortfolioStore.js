@@ -10,6 +10,7 @@ module.exports = Fluxxor.createStore({
       constants.SIDEBAR_CONTENT_UPDATED, this.onSidebarContentUpdate
     );
     this.sidebarContent = [];
+    this.activeTag = "";
   },
 
   onFetchMarkup: function(response) {
@@ -17,15 +18,17 @@ module.exports = Fluxxor.createStore({
     this.emit(constants.CHANGE_EVENT);
   },
 
-  onSidebarContentUpdate: function(posts) {
-    this.sidebarContent = posts;
+  onSidebarContentUpdate: function(postCollection) {
+    this.sidebarContent = postCollection.posts;
+    this.activeTag = postCollection.tag;
     this.emit(constants.CHANGE_EVENT);
   },
 
   getState: function() {
     return {
       pageContent: this.pageContent,
-      sidebarContent: this.sidebarContent
+      sidebarContent: this.sidebarContent,
+      activeTag: this.activeTag,
     };
   }
 });

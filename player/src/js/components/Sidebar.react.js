@@ -34,7 +34,7 @@ module.exports = React.createClass({
         </div>
         <div className="sidebar-blog-tags">
           <hr className="sidebar-content-separator"></hr>
-          <h3>Posts</h3>
+          <h4>Posts [{this.state.activeTag}]</h4>
           <ul>
             {
               this.state.sidebarContent.map(function(item, index) {
@@ -45,6 +45,7 @@ module.exports = React.createClass({
             }
           </ul>
         </div>
+        <hr className="sidebar-content-separator"></hr>
       </div>
     );
   },
@@ -62,5 +63,9 @@ module.exports = React.createClass({
   getStateFromFlux: function() {
     var flux = this.getFlux();
     return flux.store("PortfolioStore").getState();
+  },
+
+  componentWillMount: function() {
+    this.getFlux().actions.getNewestPosts();
   }
 });

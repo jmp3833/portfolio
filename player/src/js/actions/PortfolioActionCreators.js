@@ -11,7 +11,8 @@ var actions = {
 
   getNewestPosts: function() {
     PortfolioServiceClient.getTopPosts(function(posts){
-      this.dispatch(constants.SIDEBAR_CONTENT_UPDATED, JSON.parse(posts));
+      var postCollection = {posts: JSON.parse(posts), tag: "Newest"};
+      this.dispatch(constants.SIDEBAR_CONTENT_UPDATED, postCollection);
     }.bind(this));
   }
 };
