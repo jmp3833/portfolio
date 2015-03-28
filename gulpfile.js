@@ -1,55 +1,83 @@
 'use strict';
 
-var gulp = require('gulp');
-var sourcemaps = require('gulp-sourcemaps');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var watchify = require('watchify');
-var browserify = require('browserify');
-var reactify = require('reactify');
-var connect = require('gulp-connect');
-var exec = require('child_process').exec;
-var babelify = require('babelify');
-var less = require('gulp-less');
-var minifyCSS = require('gulp-minify-css');
-var bundler = watchify(browserify('./player/src/js/app.js', watchify.args));
+var gulp        = require('gulp'),
+    browserify  = require('browserify'),
+    source      = require('vinyl-source-stream'),
+    watchify    = require('watchify'),
+    connect     = require('gulp-connect'),
+    babelify    = require('babelify'),
+    reactify    = require('reactify'),
+    buffer      = require('vinyl-buffer'),
+    sourcemaps  = require('gulp-sourcemaps'),
+    exec        = require('child_process').exec,
+    less        = require('gulp-less');
 
-// Browserify transforms to accept React JSX components
-bundler.transform(reactify).on('error', restart);
-bundler.transform(babelify).on('error', restart);
-bundler.transform('brfs').on('error', restart);
-bundler.on('log', function(message) {
-  console.log('Change detected. Re-bundle completed: ' + message);
-});
-
-function bundle() {
-  return bundler
-    .bundle()
-    .on('error', restart)
-    .pipe(source('bundle.js'))
-    .on('error', restart)
-    .pipe(buffer())
-    .on('error', restart)
-    .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-    .on('error', restart)
-    .pipe(sourcemaps.write('./')) // writes .map file
-    .on('error', restart)
-    .pipe(gulp.dest('player/dist'));
+function restart(error) {
+  delete error.stream;
+  console.log(error);
+  this.emit('end');
 }
 
-function lessToCss() {
-  return gulp.src('player/less/app.less')
-    .pipe(sourcemaps.init())
+function bundleJS(b) {
+  b.bundle()
     .on('error', restart)
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./player/dist'))
+    .pipe(connect.reload());
+}
+
+gulp.task('js', function() {
+  var b = browserify('./player/src/js/app.js', watchify.args);
+  
+  b.transform(reactify);
+  b.transform(babelify);
+  b.transform('brfs');  
+
+  b.on('log', console.log);
+  b.on('update', function(){
+    process.stdout.write('Change detected: JS. Rebundling: ');
+    bundleJS(b);
+  });
+
+  bundleJS(b);
+});
+
+gulp.task('js-watch', function() {
+  var b = watchify(browserify('./player/src/js/app.js', watchify.args));
+  
+  b.transform(reactify);
+  b.transform(babelify);
+  b.transform('brfs');
+
+  b.on('log', console.log);
+  b.on('update', function(){
+    process.stdout.write('Change detected: JS. Rebundling: ');
+    bundleJS(b);
+  });
+
+  bundleJS(b);
+});
+
+gulp.task('index', function() {
+  gulp.src('./index.html')
+    .pipe(gulp.dest('./player/dist'))
+    .pipe(connect.reload());
+});
+
+gulp.task('less', function() {
+  gulp.src('./player/less/app.less')
+    .pipe(sourcemaps.init())
     .pipe(less({
-        paths: ['less']
+        paths: ['player/less']
     }))
     .on('error', restart)
     .pipe(sourcemaps.write('./'))
-    .on('error', restart)
-    .pipe(minifyCSS({keepBreaks: true}))
-    .pipe(gulp.dest('player/dist'));
-}
+    .pipe(gulp.dest('./player/dist'))
+    .pipe(connect.reload());;
+});
 
 //deploy npm webserver
 function server(){
@@ -62,10 +90,17 @@ function restart(error) {
   this.emit('end');
 }
 
-gulp.task('js', bundle);
-gulp.task('less', lessToCss);
-gulp.task('serve', ['less', 'js'], server);
-gulp.task('default', ['serve']);
+gulp.task('build', ['index', 'js', 'less']);
 
-gulp.watch('./player/less/**/*.less', ['less']);
-gulp.watch('./player/src/**/*.js', ['js']);
+gulp.task('default', ['index', 'js-watch', 'less'], function(){
+  gulp.watch('./public/css/**', ['less'], function() {
+    console.log('Change detected: Styles. Reload!');
+  });
+
+  gulp.watch('./index.html', ['index'], function() {
+    console.log('Change detected: HTML. Reload!');
+  });
+
+  // Start live reload server
+  server();
+});
