@@ -39,7 +39,7 @@ module.exports = React.createClass({
             {
               this.state.sidebarContent.map(function(item, index) {
                 return (
-                  <li><a className="social" onClick={this.fetchPage.bind(this, item)} key={item} href={"/#/post/" + item._id.slice(0,-3)}>{item.title}</a></li>
+                  <li><a className="social" onClick={this.fetchPage.bind(this, item)} key={item} href={"/#/blog/post/" + item._id.slice(0,-3)}>{item.title}</a></li>
                 );
               }.bind(this))
             }

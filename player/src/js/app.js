@@ -18,7 +18,7 @@ var {Route, NotFoundRoute, DefaultRoute} = Router;
 var routes = (
   <Route handler={App}>
     <DefaultRoute handler={Post}/>
-    <Route name="post" path="/post/:postId" handler={Post} />
+    <Route name="post" path="/blog/post/:postId" handler={Post} />
     <NotFoundRoute handler={PageNotFound}/>
   </Route>
 );
@@ -39,8 +39,8 @@ var NavBar = (
           <div id="navbar" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
               <li id="home"><a href="#">Home</a></li>
-              <li id="programming"><a href="#/blog/programming">Programming</a></li>
-              <li id="adventures"><a href="#/blog/adventures">Adventures</a></li>
+              <li id="programming"><a href="#/blog/tags/programming">Programming</a></li>
+              <li id="adventures"><a href="#/blog/tags/adventures">Adventures</a></li>
             </ul>
           </div>
         </div>
