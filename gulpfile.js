@@ -79,11 +79,6 @@ gulp.task('less', function() {
     .pipe(connect.reload());;
 });
 
-//deploy npm webserver
-function server(){
-  var server = require('./bin/www');
-}
-
 function restart(error) {
   delete error.stream;
   console.log(error);
@@ -102,5 +97,13 @@ gulp.task('default', ['index', 'js-watch', 'less'], function(){
   });
 
   // Start live reload server
-  server();
+  // Start live reload server
+  connect.server({
+    root: 'dist',
+    port: 8888,
+    livereload: {
+      port: 35730,
+      livereload: true
+    }
+  });
 });
