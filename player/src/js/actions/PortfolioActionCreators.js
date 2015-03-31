@@ -14,6 +14,20 @@ var actions = {
       var postCollection = {posts: JSON.parse(posts), tag: "Newest"};
       this.dispatch(constants.SIDEBAR_CONTENT_UPDATED, postCollection);
     }.bind(this));
+  },
+
+  getAllPosts: function() {
+    PortfolioServiceClient.getAllPosts(function(posts){
+      var postCollection = {posts: JSON.parse(posts), tag: "All"};
+      this.dispatch(constants.SIDEBAR_CONTENT_UPDATED, postCollection);
+    }.bind(this));
+  },
+
+   getPostsAfterDate: function(date) {
+    PortfolioServiceClient.getPostsAfterDate(date, function(posts){
+      var postCollection = {posts: JSON.parse(posts), tag: "2015"};
+      this.dispatch(constants.SIDEBAR_CONTENT_UPDATED, postCollection);
+    }.bind(this));
   }
 };
 

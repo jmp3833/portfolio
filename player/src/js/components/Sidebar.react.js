@@ -28,8 +28,8 @@ module.exports = React.createClass({
           <h3>Tags</h3>
           <ul>
             <li><a className="social" onClick={this.getNewest}>Newest</a></li>
-            <li><a className="social" onClick={this.getNewest}>All</a></li>
-            <li><a className="social" onClick={this.getNewest}>2015</a></li>
+            <li><a className="social" onClick={this.getAll}>All</a></li>
+            <li><a className="social" onClick={this.getPostsByDate}>2015</a></li>
           </ul>
         </div>
         <div className="sidebar-blog-tags">
@@ -54,9 +54,16 @@ module.exports = React.createClass({
     this.getFlux().actions.getNewestPosts();
   },
 
+  getAll: function(e) {
+    this.getFlux().actions.getAllPosts();
+  },
+
+  getPostsByDate: function(e) {
+    this.getFlux().actions.getPostsAfterDate('12/31/2014');
+  },
+
   fetchPage: function(item) {
     var postName = item._id.slice(0,-3);
-    console.log(postName);
     this.getFlux().actions.setPageMarkup(postName);
   },
 

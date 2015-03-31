@@ -15,6 +15,18 @@ function getTopPosts(callback) {
   _POST(params, '/api/getNewest', callback);
 }
 
+function getAllPosts(callback) {
+  var params = querystring.stringify({});
+  _POST(params, '/api/getAllPosts', callback);
+}
+
+function getPostsAfterDate(date, callback) {
+  var params = querystring.stringify({
+    date: date
+  });
+  _POST(params, '/api/getPostsAfterDate', callback);
+}
+
 function _POST(postData, path, callback) {
   var post_options = {
       host: 'localhost',
@@ -41,5 +53,7 @@ function _POST(postData, path, callback) {
 
 module.exports = {
   getHTMLFromMarkdown: getHTMLFromMarkdown,
-  getTopPosts: getTopPosts
+  getTopPosts: getTopPosts,
+  getAllPosts: getAllPosts,
+  getPostsAfterDate: getPostsAfterDate
 }

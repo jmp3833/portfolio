@@ -17,7 +17,20 @@ function getNewestPosts(amount, callback) {
       if (posts.length > amount) {
         posts = posts.slice(0,-(queryData.length - amount));
       }
-      callback(err, posts);
+      callback(err, posts, db);
+    });
+  });
+}
+
+/*
+* Get all posts that were written later than the specified date.
+*/
+function getPostsAfterDate(date, callback) {
+  DBInstance.connectToDB(function(err, db) {
+    console.log(date);
+    db.collection('posts').find({'date' : {$gt: date} }).toArray(function(err,queryData) {
+      var posts = _.sortBy(queryData, 'date');
+      callback(err, posts, db);
     });
   });
 }
@@ -30,7 +43,7 @@ function getPost(name, callback) {
     if(err){throw err}
     var filename = name + '.md';
     db.collection('posts').find({_id: filename}).toArray(function(err,queryData) {
-      callback(err, queryData[0]);
+      callback(err, queryData[0], db);
     });
   });
 }
@@ -148,5 +161,6 @@ var _getpostMetadata= function(filename, callback) {
 module.exports = {
   getNewestPosts: getNewestPosts,
   syncDB: syncDB,
-  getPost: getPost
+  getPost: getPost,
+  getPostsAfterDate: getPostsAfterDate
 }
