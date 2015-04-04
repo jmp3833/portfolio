@@ -28,8 +28,9 @@ function getPostsAfterDate(date, callback) {
 }
 
 function _POST(postData, path, callback) {
+  var postURL = window.location.href.indexOf('justin') > -1 ? 'justinpeterson.me' : '127.0.0.1';
   var post_options = {
-      host: '127.0.0.1',
+      host: postURL,
       port: '80',
       path: path,
       method: 'POST',
