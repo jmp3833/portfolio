@@ -1,2 +1,0 @@
-sudo nodemon &
-sudo gulp &
