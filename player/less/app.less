@@ -102,27 +102,6 @@ h6, .h6 {
   padding-left: 25px;
 }
 
-@media (min-width: 768px){
-  .sidebar {
-    position: fixed;
-    top: 0px;
-    bottom: 0;
-    left: 0;
-    width: 25%;
-    overflow-y: scroll; 
-  }
-  
-  .main-content-section {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    overflow-y: scroll;
-    width: 75%;
-    border-left: 1px solid #eee
-  }
-}
-
 .sidebar {
   height:100%;
   padding-top: 20px;
@@ -131,9 +110,10 @@ h6, .h6 {
 
 .main-content-section {
   height:100%;
-  padding-top: 30px;
+  padding-top: 0px;
   padding-left: 50px;
   padding-right: 50px;
+  padding-bottom: 50px;
 }
 
 .index-title {
@@ -157,6 +137,28 @@ h6, .h6 {
    height:30px;
    width:100%;
    background:#FFFFFF;
+}
+
+@media (min-width: 768px){
+  .sidebar {
+    position: fixed;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    overflow-y: scroll; 
+  }
+  
+  .main-content-section {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    overflow-y: scroll;
+    width: 75%;
+    border-left: 1px solid #eee;
+    padding-top: 30px;
+  }
 }
 
 
