@@ -4,12 +4,11 @@ var gulp        = require('gulp'),
     browserify  = require('browserify'),
     source      = require('vinyl-source-stream'),
     watchify    = require('watchify'),
-    connect     = require('gulp-connect'),
     babelify    = require('babelify'),
     reactify    = require('reactify'),
     buffer      = require('vinyl-buffer'),
     sourcemaps  = require('gulp-sourcemaps'),
-    exec        = require('child_process').exec,
+    nodemon     = require('gulp-nodemon'),
     less        = require('gulp-less');
 
 function restart(error) {
@@ -26,7 +25,6 @@ function bundleJS(b) {
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./player/dist'))
-    .pipe(connect.reload());
 }
 
 gulp.task('js', function() {
@@ -63,8 +61,7 @@ gulp.task('js-watch', function() {
 
 gulp.task('index', function() {
   gulp.src('./index.html')
-    .pipe(gulp.dest('./player/dist'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest('./player/dist'));
 });
 
 gulp.task('less', function() {
@@ -75,8 +72,11 @@ gulp.task('less', function() {
     }))
     .on('error', restart)
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./player/dist'))
-    .pipe(connect.reload());;
+    .pipe(gulp.dest('./player/dist'));
+});
+
+gulp.task('serve', function(){
+  nodemon({'script': './bin/www'});
 });
 
 function restart(error) {
@@ -87,23 +87,12 @@ function restart(error) {
 
 gulp.task('build', ['index', 'js', 'less']);
 
-gulp.task('default', ['index', 'js-watch', 'less'], function(){
-  gulp.watch('./public/css/**', ['less'], function() {
+gulp.task('default', ['index', 'js-watch', 'less', 'serve'], function(){
+  gulp.watch('./player/less/**', ['less'], function() {
     console.log('Change detected: Styles. Reload!');
   });
 
   gulp.watch('./index.html', ['index'], function() {
     console.log('Change detected: HTML. Reload!');
-  });
-
-  // Start live reload server
-  // Start live reload server
-  connect.server({
-    root: 'dist',
-    port: 8888,
-    livereload: {
-      port: 35730,
-      livereload: true
-    }
   });
 });

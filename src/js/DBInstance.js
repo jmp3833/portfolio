@@ -5,7 +5,7 @@ var connectToDB = function(callback) {
   /*
   * Connect and pass database instance if available.
   */
-  var url = 'mongodb://localhost:27017/portfolio';
+  var url = 'mongodb://localhost:27017';
   MongoClient.connect(url, function(err, db) {
     callback(err, db);
   });

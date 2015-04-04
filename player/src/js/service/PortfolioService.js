@@ -29,7 +29,7 @@ function getPostsAfterDate(date, callback) {
 
 function _POST(postData, path, callback) {
   var post_options = {
-      host: 'localhost',
+      host: '127.0.0.1',
       port: '80',
       path: path,
       method: 'POST',

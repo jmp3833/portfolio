@@ -87,5 +87,8 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  debug('Starting gulpfile...');
+  var exec = require('child_process').exec
+  exec('gulp');
 }
 

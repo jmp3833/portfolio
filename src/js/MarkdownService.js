@@ -27,7 +27,6 @@ function getNewestPosts(amount, callback) {
 */
 function getPostsAfterDate(date, callback) {
   DBInstance.connectToDB(function(err, db) {
-    console.log(date);
     db.collection('posts').find({'date' : {$gt: date} }).toArray(function(err,queryData) {
       var posts = _.sortBy(queryData, 'date');
       callback(err, posts, db);
