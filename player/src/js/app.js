@@ -52,7 +52,6 @@ var NavBar = (
 Router.run(routes, function(Handler) {
   React.render(
     <div>    
-      {NavBar}
       <div className="spacer"></div>
       <div className="row">
         <div className="col-sm-4 sidebar">
