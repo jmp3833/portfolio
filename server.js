@@ -6,11 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var cors = require('cors');
+var os = require('os');
 
 var app = express();
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://www.justinpeterson.me");
+  res.header("Access-Control-Allow-Origin", os.hostname() === 'justinpeterson.me'? "http://www.justinpeterson.me" : 'http://localhost');
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header("Access-Control-Allow-Credentials", true);
   next();
