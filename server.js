@@ -8,8 +8,13 @@ var routes = require('./routes/index');
 var cors = require('cors');
 
 var app = express();
-//Enable CORS (Allow origin requests)
-app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://www.justinpeterson.me");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 // view engine setup (basic HTML for now)
 app.set('views', path.join(__dirname,'/player'));
