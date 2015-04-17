@@ -53,13 +53,11 @@ Router.run(routes, function(Handler) {
   React.render(
     <div>    
       <div className="spacer"></div>
-      <div className="row">
-        <div className="col-sm-4 sidebar">
-          <Sidebar flux={flux}/>
-        </div>
-        <div className="col-sm-8 main-content-section">
-          <Handler flux={flux}/>
-        </div>
+      <div className="sidebar">
+        <Sidebar flux={flux}/>
+      </div>
+      <div className="main-content-section">
+        <Handler flux={flux}/>
       </div>
       <div id="footer">
         <hr className="navbar-underline"></hr>
