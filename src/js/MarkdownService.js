@@ -55,7 +55,7 @@ var syncDB = function() {
   DBInstance.connectToDB(function(err, db) {
     if(err){throw err}
     var collection = db.collection('posts');
-    _walk('./posts', function(err, data) {
+    _walk('./posts', function(err, data) {  
       if(err){throw err}
       var results = data.length;
       data.forEach(function(filePath) {
@@ -69,6 +69,7 @@ var syncDB = function() {
                 collection.insert({
                   _id: fileName,
                   title: metadata.title,
+                  subtitle: metadata.subtitle,
                   content: data,
                   date: new Date(metadata.date),
                   tags: metadata.tags
@@ -141,16 +142,27 @@ var _getpostMetadata= function(filename, callback) {
   var fileStream = fs.createReadStream(filename);
   fileStream
   .on('data', function (chunk) {
-    var postDate = chunk.toString().split('\n')[0].slice(4,-3);
-    var postTags = chunk.toString().split('\n')[1].slice(4,-3);
-    var postTitle = chunk.toString().split('\n')[2].slice(4,-3);
+    var metadata = chunk.toString().split('\n').slice(null,5);
+
+    var postDate = metadata[0].slice(4,-3);
+    var postTags = metadata[1].slice(4,-3);
+    var postTitle = metadata[2].slice(4,-3);
+    var postSubtitle = metadata[3].slice(4,-3);
+
+    postSubtitle = postSubtitle.indexOf('<!--') == -1? postSubtitle : undefined //Chop off subtitle if no metadata exists.
+
     var postTagsArray = postTags.split(', ');
-    fileStream.destroy();
-    callback({
+
+    metadata = {
       date: postDate,
       tags: postTagsArray,
-      title: postTitle
-    });
+      title: postTitle,
+      subtitle: postSubtitle
+    };
+
+    fileStream.destroy();
+    callback(metadata);
+
   })
   .on('error', function (err) {
     console.log(err);

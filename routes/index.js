@@ -11,6 +11,7 @@ router.post('/api/getPost', function(req, res) {
   MarkdownService.getPost(filename, function(err, post, db) {
     if(err){throw err}
     db.close();
+    console.log(post);
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(post));
   });

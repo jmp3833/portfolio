@@ -11,11 +11,13 @@ var NotFound = React.createClass({
     return (
       <section>
         <h2 className="post-title">
-          The Post Title
+          {this.state.postTitle}
         </h2>
-        <h3 className="post-subtitle">
-          ...The Post Subtitle
-        </h3>
+        {this.state.postSubtitle !== ''? (
+          <h3 className="post-subtitle">
+            {this.state.postSubtitle}
+          </h3>
+        ) : undefined}
         <hr></hr>
         <span dangerouslySetInnerHTML={{__html: this.state.pageContent}} />
       </section>

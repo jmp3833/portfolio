@@ -10,11 +10,15 @@ module.exports = Fluxxor.createStore({
       constants.SIDEBAR_CONTENT_UPDATED, this.onSidebarContentUpdate
     );
     this.sidebarContent = [];
+    this.postTitle = "";
+    this.postSubtitle = null; //Subtitle won;t always be there.
     this.activeTag = "";
   },
 
   onFetchMarkup: function(response) {
     this.pageContent = response.content;
+    this.postTitle = response.title;
+    this.postSubtitle = response.subtitle;
     this.emit(constants.CHANGE_EVENT);
   },
 
@@ -29,6 +33,8 @@ module.exports = Fluxxor.createStore({
       pageContent: this.pageContent,
       sidebarContent: this.sidebarContent,
       activeTag: this.activeTag,
+      postTitle: this.postTitle,
+      postSubtitle: this.postSubtitle
     };
   }
 });

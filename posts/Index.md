@@ -1,6 +1,7 @@
 <!--03/24/2015-->
 <!--programming, adventures-->
 <!--Hello, World!-->
+<!--Another blog about webdev and personal interests.-->
 
 At the moment I just intend to use this site to display my portfolio and write about things that interest me, whether they involve software development or not. Since I'm developing the blog portion from scratch, I would love it if you took a look at the [source](https://github.com/jmp3833/portfolio "source") and suggest ways I could improve the site!
 
