@@ -15,7 +15,7 @@ var NotFound = React.createClass({
         </h2>
         {this.state.postSubtitle !== ''? (
           <h3 className="post-subtitle">
-            {this.state.postSubtitle}
+            {'...' + this.state.postSubtitle}
           </h3>
         ) : undefined}
         <hr></hr>
